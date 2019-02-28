@@ -19,13 +19,13 @@ public class BackendApplication implements CommandLineRunner{
 		
 	}
 
-	@Autowired
-	private ProductoRepository productoDAO;
+	//@Autowired
+	//private ProductoRepository productoDAO;
 	@Override
 	public void run(String... args) throws Exception {
-	
+	/*
 		Producto p1=new Producto();
-		p1.setId(1);
+		p1.setId(97);
 		p1.setPrecio(45.56);
 		p1.setProducto("Arroz");
 		p1.setFechaVencimiento(new Date());
@@ -33,7 +33,9 @@ public class BackendApplication implements CommandLineRunner{
 	
 		p1=productoDAO.save(p1);
 	
+	
 		System.out.println(p1.getId());
+		*/
 	}
 
 }

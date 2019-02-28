@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+
 @Entity
 @Table(name="productos")
 public class Producto implements Serializable{
@@ -22,7 +23,7 @@ public class Producto implements Serializable{
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;
 	
-	@Column(length=100, name="descripcion")
+	@Column(length=100, name="descripcion",nullable=false)
 	private String producto;
 	
 	private double precio;
