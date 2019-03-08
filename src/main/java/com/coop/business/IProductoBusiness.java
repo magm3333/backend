@@ -16,4 +16,7 @@ public interface IProductoBusiness {
 
 	public List<Producto> list() throws BusinessException;
 
+	public List<Producto> list(String parteDelNombre, 
+			double precioDesde, double precioHasta) throws BusinessException;
+
 }
