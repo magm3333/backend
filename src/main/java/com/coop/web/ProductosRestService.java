@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,12 +22,13 @@ import com.coop.business.NotFoundException;
 import com.coop.model.Producto;
 
 @RestController
+@RequestMapping(Constantes.URL_PRODUCTOS)
 public class ProductosRestService {
 
 	@Autowired
 	private IProductoBusiness productoBusiness;
 
-	@GetMapping("/productos")
+	@GetMapping("")
 	public ResponseEntity<List<Producto>> list(
 			@RequestParam(required=false,defaultValue="@*@",value="q" ) String parteDelNombre, 
 			@RequestParam(required=false,defaultValue="-1",value="pdesde" ) double precioDesde, 
@@ -47,7 +49,7 @@ public class ProductosRestService {
 		}
 	}
 
-	@GetMapping("/productos/{id}")
+	@GetMapping("/{id}")
 	public ResponseEntity<Producto> load(@PathVariable("id") long id) {
 		try {
 			return new ResponseEntity<Producto>(productoBusiness.load(id), HttpStatus.OK);
@@ -58,7 +60,7 @@ public class ProductosRestService {
 		}
 	}
 
-	@PostMapping("/productos")
+	@PostMapping("")
 	public ResponseEntity<Producto> add(@RequestBody Producto producto) {
 		try {
 			return new ResponseEntity<Producto>(productoBusiness.add(producto),
@@ -68,7 +70,7 @@ public class ProductosRestService {
 		}
 	}
 
-	@PutMapping("/productos")
+	@PutMapping("")
 	public ResponseEntity<Producto> update(@RequestBody Producto producto) {
 		try {
 			return new ResponseEntity<Producto>(productoBusiness.update(producto),
@@ -78,7 +80,7 @@ public class ProductosRestService {
 		}
 	}
 
-	@DeleteMapping("/productos/{id}")
+	@DeleteMapping("/{id}")
 	public ResponseEntity<String> delete(@PathVariable("id") long id) {
 		try {
 			productoBusiness.delete(id);
