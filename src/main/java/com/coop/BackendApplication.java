@@ -1,17 +1,12 @@
 package com.coop;
 
-import java.util.Date;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-import com.coop.model.Producto;
-import com.coop.model.persistence.ProductoRepository;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
 @SpringBootApplication
-public class BackendApplication implements CommandLineRunner{
+public class BackendApplication extends SpringBootServletInitializer implements CommandLineRunner{
 
 	public static void main(String[] args) {
 		
