@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.coop.model.Producto;
+import com.coop.model.dto.ProductoSintetico;
 import com.coop.model.persistence.ProductoRepository;
 
 @Service
@@ -80,6 +81,24 @@ public class ProductoBusiness implements IProductoBusiness {
 			} else {
 				throw new BusinessException("Parámetros incorrectos");
 			}
+		} catch (Exception e) {
+			throw new BusinessException(e);
+		}
+	}
+
+	@Override
+	public List<ProductoSintetico> listadoSintetico(double precioMinimo) throws BusinessException {
+		try {
+			return productoDAO.listadoSintetico(precioMinimo);
+		} catch (Exception e) {
+			throw new BusinessException(e);
+		}
+	}
+
+	@Override
+	public Long cantidadProductosMasCarosQue(double precioMinimo) throws BusinessException {
+		try {
+			return productoDAO.cantidadProductosMasCarosQue(precioMinimo);
 		} catch (Exception e) {
 			throw new BusinessException(e);
 		}
