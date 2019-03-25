@@ -22,4 +22,10 @@ public interface IProductoBusiness {
 	public List<ProductoSintetico> listadoSintetico(double precioMinimo) throws BusinessException;
 
 	public Long cantidadProductosMasCarosQue(double precioMinimo) throws BusinessException;
+
+	public int updatePrecio(double precio, long id)  throws BusinessException;
+
+	
+	public List<Producto> listPageable( int pagina, int tamanio) throws BusinessException;
+	public List<Producto> listSortable() throws BusinessException;
 }

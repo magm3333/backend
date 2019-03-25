@@ -3,6 +3,8 @@ package com.coop.web;
 import java.util.Date;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +28,8 @@ import com.coop.model.dto.ProductoSintetico;
 @RequestMapping(Constantes.URL_PRODUCTOS)
 public class ProductosRestService {
 
+	private Logger log = LoggerFactory.getLogger(this.getClass());
+	
 	@Autowired
 	private IProductoBusiness productoBusiness;
 
@@ -85,6 +89,7 @@ public class ProductosRestService {
 			productoBusiness.delete(id);
 			return new ResponseEntity<String>(HttpStatus.OK);
 		} catch (BusinessException e) {
+			log.error(e.getMessage(),e);
 			return new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
@@ -102,10 +107,12 @@ public class ProductosRestService {
 	}
 
 	@GetMapping("/sintetico")
-	public ResponseEntity<List<ProductoSintetico>> listadoSintetico(@RequestParam(value = "precio_minimo") double precioMinimo) {
+	public ResponseEntity<List<ProductoSintetico>> listadoSintetico(
+			@RequestParam(value = "precio_minimo") double precioMinimo) {
 		try {
 
-			return new ResponseEntity<List<ProductoSintetico>>(productoBusiness.listadoSintetico(precioMinimo), HttpStatus.OK);
+			return new ResponseEntity<List<ProductoSintetico>>(productoBusiness.listadoSintetico(precioMinimo),
+					HttpStatus.OK);
 		} catch (BusinessException e) {
 			e.printStackTrace();
 			return new ResponseEntity<List<ProductoSintetico>>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -120,6 +127,46 @@ public class ProductosRestService {
 			return new ResponseEntity<Long>(productoBusiness.cantidadProductosMasCarosQue(precioMinimo), HttpStatus.OK);
 		} catch (BusinessException e) {
 			return new ResponseEntity<Long>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
+	@PutMapping("/{id}/precio")
+	public ResponseEntity<String> updatePrecio(@RequestParam(value = "precio") double precio,
+			@PathVariable("id") long id) {
+		try {
+			productoBusiness.updatePrecio(precio, id);
+			return new ResponseEntity<String>(HttpStatus.OK);
+		} catch (BusinessException e) {
+			return new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
+	}
+
+	@GetMapping("/pageable")
+	public ResponseEntity<List<Producto>> listPageable(
+			@RequestParam(value = "pagina") int pagina,
+			@RequestParam(value = "tamanio") int tamanio) {
+		log.info("Se esá ejecutando el proceso");
+		log.debug("pagina={}, tamanio={}",pagina,tamanio);
+		log.trace("tiempo={}, pagina={}, tamanio={}",System.currentTimeMillis(),pagina,tamanio);
+		try {
+
+			return new ResponseEntity<List<Producto>>(productoBusiness.listPageable( pagina, tamanio),
+					HttpStatus.OK);
+		} catch (BusinessException e) {
+			return new ResponseEntity<List<Producto>>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@GetMapping("/sorted")
+	public ResponseEntity<List<Producto>> listSorted() {
+
+		try {
+
+			return new ResponseEntity<List<Producto>>(productoBusiness.listSortable(),
+					HttpStatus.OK);
+		} catch (BusinessException e) {
+			return new ResponseEntity<List<Producto>>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
