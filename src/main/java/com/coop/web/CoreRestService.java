@@ -1,5 +1,7 @@
 package com.coop.web;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.HttpStatus;
@@ -12,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(Constantes.URL_CORE)
 @PropertySource({"classpath:version.properties"})
 public class CoreRestService {
-	
+	private Logger log = LoggerFactory.getLogger(this.getClass());
 	@Value("${app.version}")
 	private String version;
 	
