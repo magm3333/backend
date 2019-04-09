@@ -1,5 +1,5 @@
-02-04-2019 09:42:41.004 INFO  o.s.b.a.SpringApplicationAdminMXBeanRegistrar$SpringApplicationAdmin.shutdown Application shutdown requested.
-02-04-2019 09:42:41.039 INFO  o.s.s.c.ThreadPoolTaskExecutor.shutdown Shutting down ExecutorService 'applicationTaskExecutor'
-02-04-2019 09:42:41.051 INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean.destroy Closing JPA EntityManagerFactory for persistence unit 'default'
-02-04-2019 09:42:41.073 INFO  com.zaxxer.hikari.HikariDataSource.close HikariPool-1 - Shutdown initiated...
-02-04-2019 09:42:41.146 INFO  com.zaxxer.hikari.HikariDataSource.close HikariPool-1 - Shutdown completed.
+09-04-2019 07:41:58.102 INFO  o.s.b.a.SpringApplicationAdminMXBeanRegistrar$SpringApplicationAdmin.shutdown Application shutdown requested.
+09-04-2019 07:41:58.116 INFO  o.s.s.c.ThreadPoolTaskExecutor.shutdown Shutting down ExecutorService 'applicationTaskExecutor'
+09-04-2019 07:41:58.120 INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean.destroy Closing JPA EntityManagerFactory for persistence unit 'default'
+09-04-2019 07:41:58.124 INFO  com.zaxxer.hikari.HikariDataSource.close HikariPool-1 - Shutdown initiated...
+09-04-2019 07:41:58.130 INFO  com.zaxxer.hikari.HikariDataSource.close HikariPool-1 - Shutdown completed.
