@@ -17,6 +17,8 @@
 <script src="controllers/div1.controller.js" 
 	type="text/javascript"></script>
 <script src="controllers/div2.controller.js" 
+	type="text/javascript"></script>
+<script src="services/productos.service.js" 
 	type="text/javascript"></script>	
 </head>
 <body ng-app="frontend">
@@ -27,6 +29,29 @@
 
 <input type="number" ng-model="numero">
 <span style="font-size: {{numero}}px">{{numero}}</span>
+<br/>
+
+<hr/>
+Descripcion: <input type="text" ng-model="enblanco.producto"> - 
+Precio: <input type="number" ng-model="enblanco.precio">
+<button ng-click="agregar()" >Agregar</button>
+<hr/>
+Buscar: <input type="text" ng-model="search">
+<ul>
+<li ng-repeat="p in productos  | filter:search track by $index">
+	{{p.producto}}  - 
+	<input type="number" ng-model="p.precio"> - 
+	<button ng-click="eliminar(p)" >Eliminar</button>
+</li>
+</ul>
+ 
+{{productos.length}} productos en la lista
+<br/>
+${{sumaTotal()}} en total
+<hr/>
+
+
+
 
 </div>
 <div ng-controller="div2Controller">
