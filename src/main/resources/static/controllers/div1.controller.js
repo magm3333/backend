@@ -4,11 +4,13 @@ app.controller('div1Controller',function($scope, productosService){
 	$scope.numero=12;
 	$scope.enblanco={};
 	
-	$scope.productos=[];
+	$scope.productos=productosService;
 	
-	$scope.sumaTotal=function(){
-		return productosService.sumaTotal($scope.productos);
-	}
+//	$scope.productos=productosService.data().productos;
+	
+	//$scope.sumaTotal=function(){
+	//	return productosService.sumaTotal($scope.productos);
+	//}
 	$scope.eliminar=function(producto){
 		productosService.eliminar(producto).then(   
 				function(resp){
@@ -24,14 +26,14 @@ app.controller('div1Controller',function($scope, productosService){
 				},
 				function(err){}    );
 	}
+	productosService.listar();
 	
-	
-	productosService.listar().then(
+	/*productosService.listar().then(
 			function(resp){
 				$scope.productos=resp.data;
 			},
 			function(err){}
-	);
+	);*/
 	
 	
 	
