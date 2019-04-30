@@ -15,6 +15,12 @@ import com.coop.web.Constantes;
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
+	
+	//(1)// curl -X POST http://localhost:8080/dologin -H 'content-type: multipart/form-data' -F username=admin -F password=123 -c cookies.txt -v 
+
+	//(2)//	curl -X GET http://localhost:8080/api/v1/productos -b cookies.txt -v
+	
+	//(3)// curl -X POST http://localhost:8080/logout -c cookies.txt -v
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable();
