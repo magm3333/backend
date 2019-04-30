@@ -18,7 +18,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable();
-		http.authorizeRequests().antMatchers("/login*").permitAll().anyRequest().authenticated();
+		http.authorizeRequests().antMatchers("/dologin*").permitAll().anyRequest().authenticated();
 		http.formLogin().loginPage(Constantes.URL_DENY).loginProcessingUrl("/dologin")
 				.defaultSuccessUrl(Constantes.URL_LOGINOK, true).failureForwardUrl(Constantes.URL_DENY);
 		http.logout().deleteCookies("JSESSIONID", "rm", "SESSION");
