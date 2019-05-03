@@ -23,7 +23,7 @@ import com.coop.model.Usuario;
 
 @RestController
 @RequestMapping(Constantes.URL_USUARIOS)
-public class UsuariosRestService {
+public class UsuariosRestService extends BaseRestService{
 
 	@Autowired
 	private IUsuarioBusiness usuarioBusiness;

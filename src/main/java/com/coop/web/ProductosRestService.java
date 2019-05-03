@@ -26,7 +26,7 @@ import com.coop.model.dto.ProductoSintetico;
 
 @RestController
 @RequestMapping(Constantes.URL_PRODUCTOS)
-public class ProductosRestService {
+public class ProductosRestService extends BaseRestService {
 
 	private Logger log = LoggerFactory.getLogger(this.getClass());
 	

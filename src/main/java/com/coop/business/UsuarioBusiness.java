@@ -82,4 +82,18 @@ public class UsuarioBusiness implements IUsuarioBusiness {
 		}
 	}
 
+	@Override
+	public Usuario load(String usernameOrEmail) throws BusinessException, NotFoundException {
+		List<Usuario> l;
+		try {
+			l=usuarioDAO.findByUsernameOrEmail(usernameOrEmail, usernameOrEmail);
+		} catch (Exception e) {
+			throw new BusinessException(e.getMessage(),e);
+		}
+		if(l.size()==0)
+			throw new NotFoundException("No se encuentra el usuari@ con nombre/email="+usernameOrEmail);
+		
+		return l.get(0);
+	}
+
 }

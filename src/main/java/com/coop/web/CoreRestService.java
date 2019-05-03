@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 
 @PropertySource({ "classpath:version.properties" })
-public class CoreRestService {
+public class CoreRestService extends BaseRestService {
 	private Logger log = LoggerFactory.getLogger(this.getClass());
 	@Value("${app.version}")
 	private String version;
@@ -35,7 +35,7 @@ public class CoreRestService {
 
 	@GetMapping(Constantes.URL_LOGINOK)
 	public ResponseEntity<String> loginok() {
-		return new ResponseEntity<String>("{}", HttpStatus.OK);
+		return new ResponseEntity<String>(userToJsonObject(getUserLogged()).toString(), HttpStatus.OK);
 	}
 
 	@GetMapping(Constantes.URL_LOGOUT)

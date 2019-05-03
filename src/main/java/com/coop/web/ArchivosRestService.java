@@ -25,7 +25,7 @@ import com.coop.model.Archivo;
 
 @RestController
 @RequestMapping(Constantes.URL_ARCHIVOS)
-public class ArchivosRestService {
+public class ArchivosRestService extends BaseRestService{
 	private Logger log = LoggerFactory.getLogger(this.getClass());
 	@Autowired
 	private IArchivoBusiness archivoBusiness;

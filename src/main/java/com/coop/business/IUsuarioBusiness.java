@@ -18,4 +18,6 @@ public interface IUsuarioBusiness {
 
 	public List<Usuario> list(String parteDelNombre) throws BusinessException;
 
+	public Usuario load(String usernameOrEmail) throws BusinessException, NotFoundException;
+
 }
