@@ -18,7 +18,7 @@ public class CoreRestService extends BaseRestService {
 	@Value("${app.version}")
 	private String version;
 
-	@GetMapping(Constantes.URL_CORE + "/version")
+	@GetMapping("/version")
 	public ResponseEntity<String> version() {
 		return new ResponseEntity<String>(version, HttpStatus.OK);
 	}
@@ -36,6 +36,11 @@ public class CoreRestService extends BaseRestService {
 	@GetMapping(Constantes.URL_LOGINOK)
 	public ResponseEntity<String> loginok() {
 		return new ResponseEntity<String>(userToJsonObject(getUserLogged()).toString(), HttpStatus.OK);
+	}
+	
+	@GetMapping(Constantes.URL_AUTHINFO)
+	public ResponseEntity<String> authInfo() {
+		return loginok();
 	}
 
 	@GetMapping(Constantes.URL_LOGOUT)

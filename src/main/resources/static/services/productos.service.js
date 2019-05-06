@@ -1,12 +1,12 @@
 app=angular.module('frontend');
 
 app.service('productosService',
-function($http){
+function($http, URL_API_BASE){
 	
 	var servicio={
 		datos:[],
 		listar:function(){
-			$http.get('/api/v1/productos').then(
+			$http.get(URL_API_BASE+'productos').then(
 					function(resp){
 						this.datos=resp.data;
 					},
@@ -14,10 +14,10 @@ function($http){
 			);
 		},
 		agregar:function(producto) {
-			return $http.post("api/v1/productos",producto);
+			return $http.post(URL_API_BASE+'productos',producto);
 		},
 		eliminar:function(producto){
-			return $http.delete('/api/v1/productos/'+producto.id);
+			return $http.delete(URL_API_BASE+'productos/'+producto.id);
 			
 			
 		},

@@ -26,6 +26,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	//(3)// curl -X POST http://localhost:8080/logout -c cookies.txt -v
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
+		
+		String[] resources = new String[] { "/", "/index.html", "/favicon.png", "/app.js", "/config/**",
+				"/directives/**", "/controllers/**", "/img/**", "/lib/**", "/services/**",
+				"/views/**", Constantes.URL_DENY, "/webjars/**", "/swagger-resources/**", "/swagger-ui.html",
+				Constantes.URL_CORE + "/version" };
+		http.authorizeRequests().antMatchers(resources).permitAll();
+		
+		
 		http.csrf().disable();
 		http.authorizeRequests().antMatchers("/dologin*").permitAll()
 		.anyRequest().authenticated();

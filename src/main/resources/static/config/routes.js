@@ -1,5 +1,10 @@
 angular.module('frontend').config( 
-	function($routeProvider,$locationProvider){
+	function($routeProvider,$locationProvider, $httpProvider){
+		
+		
+		$httpProvider.defaults.withCredentials = true;
+		$httpProvider.interceptors.push('APIInterceptor');
+		
 		$routeProvider
 		
 		.when('/main',{

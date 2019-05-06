@@ -1,5 +1,33 @@
 angular.module('frontend')
-.run( function($rootScope,$location){
+.constant('URL_API_BASE', '/api/v1/')
+.constant('URL_BASE', '/')
+.run( function($rootScope,$location,$uibModal,coreService){
+	
+	$rootScope.loginOpen=false;
+	$rootScope.loginData=false;
+	$rootScope.loggedIn=false;
+	
+	$rootScope.openLoginForm = function(size) {
+		if (!$rootScope.loginOpen) {
+			$rootScope.loginOpen = true;
+			$uibModal.open({
+				animation : true,
+				backdrop : 'static',
+				keyboard : false,
+				templateUrl : 'views/loginForm.html',
+				controller : 'LoginFormController',
+				size : 'md'
+			});
+		}
+	};
+	
+	$rootScope.logout=function() {
+		$rootScope.loginData=false;
+		$rootScope.loggedIn=false;
+		coreService.logout().then(function(resp){
+			
+		},function(){});
+	};
 	
 	$rootScope.oldLoc=false;
 	$rootScope.relocate=function(loc){
