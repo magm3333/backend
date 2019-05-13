@@ -14,4 +14,6 @@ public final class Constantes {
 	public static final String URL_AUTHINFO   = "/authinfo";
 	public static final String URL_LOGOUT   = "/dologout";
 	public static final String URL_DENY   = "/deny";
+	public static final String URL_TOKEN   = "/authtoken";
+	
 }

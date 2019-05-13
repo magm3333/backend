@@ -7,11 +7,14 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import com.coop.business.IAuthTokenBusiness;
+import com.coop.model.persistence.UsuarioRepository;
 import com.coop.web.Constantes;
 
 @Configuration
@@ -47,7 +50,17 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 		http.httpBasic();
 
+		
+		http.addFilterAfter(new CustomTokenAuthenticationFilter(authTokenService, usuariosDAO),
+				UsernamePasswordAuthenticationFilter.class);
+		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 	}
+	
+	@Autowired
+	private IAuthTokenBusiness authTokenService;
+	@Autowired
+	private UsuarioRepository usuariosDAO;
+
 
 	@Bean
 	public static PasswordEncoder passwordEncoder() {
