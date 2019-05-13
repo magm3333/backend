@@ -21,11 +21,21 @@ angular.module('frontend')
 		}
 	};
 	
+	coreService.authInfo().then(
+			function(resp){
+				$rootScope.loginData=resp.data;
+				$rootScope.loggedIn=true;	
+				$rootScope.loginOpen = false;
+			}
+	);
+	
 	$rootScope.logout=function() {
 		$rootScope.loginData=false;
 		$rootScope.loggedIn=false;
 		coreService.logout().then(function(resp){
-			
+			$rootScope.loginData=resp.data;
+			$rootScope.loggedIn=true;	
+			$rootScope.loginOpen = false;
 		},function(){});
 	};
 	
