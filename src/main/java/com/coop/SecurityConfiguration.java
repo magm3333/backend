@@ -42,11 +42,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		.anyRequest().authenticated();
 		http.formLogin()
 			.loginPage(Constantes.URL_DENY).loginProcessingUrl("/dologin")
-			.defaultSuccessUrl(Constantes.URL_LOGINOK, true).failureForwardUrl(Constantes.URL_DENY);
+			.successForwardUrl(Constantes.URL_LOGINOK).failureForwardUrl(Constantes.URL_DENY);
 		http.logout().deleteCookies("JSESSIONID", "rm", "SESSION");
 
-		http.rememberMe().alwaysRemember(true)
-		.rememberMeParameter("rm").tokenValiditySeconds(3600);
+		//http.rememberMe().alwaysRemember(true)
+		//.rememberMeParameter("rm").tokenValiditySeconds(3600);
 
 		http.httpBasic();
 

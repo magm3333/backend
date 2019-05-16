@@ -36,7 +36,12 @@ public class CoreRestService extends BaseRestService {
 	public ResponseEntity<String> loginok() {
 		return new ResponseEntity<String>(userToJsonObject(getUserLogged()).toString(), HttpStatus.OK);
 	}
+	@PostMapping(Constantes.URL_LOGINOK)
+	public ResponseEntity<String> loginokPost() {
+		return new ResponseEntity<String>(userToJsonObject(getUserLogged()).toString(), HttpStatus.OK);
+	}
 
+	
 	@GetMapping(Constantes.URL_AUTHINFO)
 	public ResponseEntity<String> authInfo() {
 		return loginok();
