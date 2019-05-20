@@ -42,8 +42,10 @@ public class CustomTokenAuthenticationFilter extends OncePerRequestFilter {
 	public static String ORIGIN_TOKEN_HEADER = "header";
 
 	public static String AUTH_HEADER = "X-AUTH-TOKEN";
+	public static String AUTH_HEADER1 = "XAUTHTOKEN";
 	public static String AUTH_PARAMETER = "xauthtoken";
 	public static String AUTH_PARAMETER1 = "token";
+
 	
 	//public static String ATTR_SESSION_NOT_CREATION = "ATTR_SESSION_NOT_CREATION";
 
@@ -55,22 +57,24 @@ public class CustomTokenAuthenticationFilter extends OncePerRequestFilter {
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
 			throws ServletException, IOException {
 		String parameter = request.getParameter(AUTH_PARAMETER);
-		if(!esValido(parameter)) {
+		if (!esValido(parameter)) {
 			parameter = request.getParameter(AUTH_PARAMETER1);
 		}
 		String header = request.getHeader(AUTH_HEADER);
-
-		if (!esValido(parameter) && !esValido(header)) {
+		if (!esValido(header)) {
+			header = request.getHeader(AUTH_HEADER1);
+		}
+		if (!esValido(parameter) && !esValido(header) ) {
 			chain.doFilter(request, response);
 			return;
 		}
-		String token="";
+		String token = "";
 		if (esValido(parameter)) {
 			token=parameter;
-			log.debug("Token recibido por query param="+token);
+			log.trace("Token recibido por query param="+token);
 		} else {
 			token=header;
-			log.debug("Token recibido por header="+token);
+			log.trace("Token recibido por header="+token);
 		}
 		String[] tokens = null;
 
@@ -83,6 +87,7 @@ public class CustomTokenAuthenticationFilter extends OncePerRequestFilter {
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 			chain.doFilter(request, response);
+			return;
 		}
 
 		// A partir de aquí, se considera que se envió el el token y es propritario, por
@@ -92,11 +97,16 @@ public class CustomTokenAuthenticationFilter extends OncePerRequestFilter {
 			authToken = authTokenService.load(tokens[0]);
 		} catch (NotFoundException e) {
 			SecurityContextHolder.clearContext();
-			throw new ServletException("No existe el token=" + token);
+			//throw new ServletException("No existe el token=" + token);
+			log.debug("No existe el token=" + token);
+			chain.doFilter(request, response);
+			return;
 		} catch (BusinessException e) {
 			SecurityContextHolder.clearContext();
 			log.error(e.getMessage(), e);
-			throw new ServletException(e);
+			chain.doFilter(request, response);
+			return;
+			//throw new ServletException(e);
 		}
 
 		if (!authToken.valid()) {
@@ -116,9 +126,11 @@ public class CustomTokenAuthenticationFilter extends OncePerRequestFilter {
 			}
 			SecurityContextHolder.clearContext();
 			log.debug("El Token "+token+" ha expirado");
-			throw new ServletException("El Token ha expirado. Token=" + token);
+			//throw new ServletException("El Token ha expirado. Token=" + token);
+			chain.doFilter(request, response);
+			return;
 		}
-
+		
 		try {
 			authToken.setLast_used(new Date());
 			authToken.addRequest();

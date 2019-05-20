@@ -15,5 +15,9 @@ public final class Constantes {
 	public static final String URL_LOGOUT   = "/dologout";
 	public static final String URL_DENY   = "/deny";
 	public static final String URL_TOKEN   = "/authtoken";
+	public static final String URL_WEBSOCKET_ENPOINT = URL_API_BASE + "/ws";
 	
+	public static final String TOPIC_SEND_WEBSOCKET_GRAPH="/backend/data/graph";
+	
+	public static final String URL_GRAPH =  URL_API_BASE  + "/graph";
 }
