@@ -1,5 +1,6 @@
 package com.coop.business;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,7 +46,7 @@ public class DatoBusiness implements IDatoBusiness {
 		} catch (Exception e) {
 			throw new BusinessException(e);
 		}
-		
+
 	}
 
 	@Override
@@ -56,5 +57,33 @@ public class DatoBusiness implements IDatoBusiness {
 			throw new BusinessException(e);
 		}
 	}
-	
+
+	@Override
+	public List<Dato> listByTopicDesde(String topico, Date desde) throws BusinessException {
+		try {
+			return datoDAO.findByTopicoAndTiempoGreaterThanEqualOrderByTiempoDesc(topico, desde);
+		} catch (Exception e) {
+			throw new BusinessException(e);
+		}
+	}
+
+	@Override
+	public List<Dato> listByTopicHasta(String topico, Date hasta) throws BusinessException {
+		try {
+			return datoDAO.findByTopicoAndTiempoLessThanEqualOrderByTiempoDesc(topico, hasta);
+		} catch (Exception e) {
+			throw new BusinessException(e);
+		}
+	}
+
+	@Override
+	public List<Dato> listByTopicDesdeHasta(String topico, Date desde, Date hasta) throws BusinessException {
+		try {
+			return datoDAO.findByTopicoAndTiempoGreaterThanEqualAndTiempoLessThanEqualOrderByTiempoDesc(topico, desde,
+					hasta);
+		} catch (Exception e) {
+			throw new BusinessException(e);
+		}
+	}
+
 }

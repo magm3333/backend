@@ -1,10 +1,12 @@
 package com.coop.web;
 
+import java.util.Date;
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,17 +28,31 @@ import com.coop.model.Dato;
 
 @RestController
 @RequestMapping(Constantes.URL_INTEGRATION)
-public class IntegrationRestService extends BaseRestService{
+public class IntegrationRestService extends BaseRestService {
 	private Logger log = LoggerFactory.getLogger(this.getClass());
 	@Autowired
 	private IDatoBusiness datoBusiness;
 
 	@PreAuthorize("hasRole('ROLE_INTEGRATION')")
 	@GetMapping("/dato")
-	public ResponseEntity<List<Dato>> list(
-			@RequestParam(value = "topico") String topico) {
+	public ResponseEntity<List<Dato>> list(@RequestParam(value = "topico") String topico,
+			@RequestParam(value = "desde", required = false, defaultValue = "1970-01-01 00:00:00") @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date desde,
+			@RequestParam(value = "hasta", required = false, defaultValue = "1970-01-01 00:00:00") @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date hasta) {
+		boolean hayDesde = desde.getTime() != 10800000;
+		boolean hayHasta = desde.getTime() != 10800000;
+
 		try {
-			return new ResponseEntity<List<Dato>>(datoBusiness.listByTopic(topico), HttpStatus.OK);
+			if (hayDesde && hayHasta) {
+				return new ResponseEntity<List<Dato>>(datoBusiness.listByTopicDesdeHasta(topico, desde, hasta),
+						HttpStatus.OK);
+			} else if (hayDesde && !hayHasta) {
+				return new ResponseEntity<List<Dato>>(datoBusiness.listByTopicDesde(topico, desde), HttpStatus.OK);
+			} else if (!hayDesde && hayHasta) {
+				return new ResponseEntity<List<Dato>>(datoBusiness.listByTopicHasta(topico, hasta), HttpStatus.OK);
+			} else {
+
+				return new ResponseEntity<List<Dato>>(datoBusiness.listByTopic(topico), HttpStatus.OK);
+			}
 		} catch (BusinessException e) {
 			return new ResponseEntity<List<Dato>>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
@@ -58,6 +74,8 @@ public class IntegrationRestService extends BaseRestService{
 	@PostMapping("/dato")
 	public ResponseEntity<Dato> add(@RequestBody Dato dato) {
 		try {
+			if (dato.getTiempo() == null)
+				dato.setTiempo(new Date());
 			datoBusiness.save(dato);
 			HttpHeaders responseHeaders = new HttpHeaders();
 			responseHeaders.set("location", Constantes.URL_INTEGRATION + "/dato/" + dato.getId());
@@ -67,7 +85,6 @@ public class IntegrationRestService extends BaseRestService{
 		}
 	}
 
-	
 	@PreAuthorize("hasRole('ROLE_INTEGRATION')")
 	@PutMapping("/dato")
 	public ResponseEntity<Dato> update(@RequestBody Dato dato) {
@@ -88,7 +105,7 @@ public class IntegrationRestService extends BaseRestService{
 			datoBusiness.delete(id);
 			return new ResponseEntity<String>(HttpStatus.OK);
 		} catch (BusinessException e) {
-			log.error(e.getMessage(),e);
+			log.error(e.getMessage(), e);
 			return new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
