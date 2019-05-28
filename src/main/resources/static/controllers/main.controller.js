@@ -20,7 +20,7 @@ app.controller('MainController',function($scope, $rootScope, $log, graphService,
 			$log.log("iniciandoWS");
 			wsService.initStompClient('/backend/data/graph', function(payload,
 					headers, res) {
-				//$log.log(payload);
+				$log.log(payload);
 				if(payload.type=='GRAPH_DATA') {
 					$scope.procesaDatosGraph(payload.payload);
 				}

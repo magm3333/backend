@@ -20,4 +20,6 @@ public final class Constantes {
 	public static final String TOPIC_SEND_WEBSOCKET_GRAPH="/backend/data/graph";
 	
 	public static final String URL_GRAPH =  URL_API_BASE  + "/graph";
+	
+	public static final String URL_INTEGRATION =  URL_API_BASE  + "/integration";
 }

@@ -6,7 +6,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 @SpringBootApplication(exclude = {SecurityAutoConfiguration.class})
 
@@ -18,13 +17,20 @@ public class BackendApplication extends SpringBootServletInitializer implements 
 		
 	}
 
-	@Autowired
-	private  PasswordEncoder pe; 
+	//@Autowired
+	//private  PasswordEncoder pe; 
 	//@Autowired
 	//private ProductoRepository productoDAO;
+	
+	@Autowired
+	private DefaultData defaultData;
 	@Override
 	public void run(String... args) throws Exception {
-		System.out.println(pe.encode("123"));
+		
+		defaultData.ensureAllRoles();
+		defaultData.ensureUserIntegration();
+		defaultData.ensureUserGetToken();
+		//System.out.println(pe.encode("123"));
 		/*
 		Producto p1=new Producto();
 		p1.setId(97);

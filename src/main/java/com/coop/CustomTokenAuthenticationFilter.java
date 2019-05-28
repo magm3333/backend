@@ -139,8 +139,10 @@ public class CustomTokenAuthenticationFilter extends OncePerRequestFilter {
 			String username = authToken.getUsername();
 			List<Usuario> lu = usuariosDAO.findByUsernameOrEmail(username, username);
 			if(lu.size()==1) {
+				//TODO comprobar todos los atributos que hacen que la cuenta este habilitada
 				log.debug("Token para usuario "+lu.get(0).getUsername());
 				UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(lu.get(0), null,lu.get(0).getAuthorities());
+				
 				SecurityContextHolder.getContext().setAuthentication(auth);
 			} else {
 				log.debug("No se encontró el usuario {} por token",username);
