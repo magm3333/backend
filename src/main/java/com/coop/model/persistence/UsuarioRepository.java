@@ -15,5 +15,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 	public List<Usuario> findByFirstNameLikeAndEnabledTrueOrderByUsername(String parteDelNombre);
 
 	public List<Usuario> findByUsernameOrEmail(String username, String email);
+	
+	public List<Usuario> findByUsername(String username);
 
 }

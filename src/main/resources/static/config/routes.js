@@ -1,7 +1,7 @@
 angular.module('frontend').config( 
-	function($routeProvider,$locationProvider, $httpProvider){
+	function($routeProvider,$locationProvider, $httpProvider, $localStorageProvider){
 		
-		
+		$localStorageProvider.setKeyPrefix('frontend/');
 		$httpProvider.defaults.withCredentials = true;
 		$httpProvider.interceptors.push('APIInterceptor');
 		

@@ -1,5 +1,5 @@
 angular.module('frontend',
 		['ngRoute','ngAnimate','ngTouch',
-		 'ui.bootstrap',
-		 'ngLoadingSpinner']
+		 'ui.bootstrap','ngStorage',
+		 'ngLoadingSpinner', 'ngStomp', 'chart.js']
 );
